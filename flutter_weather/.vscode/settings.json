@@ -1,0 +1,17 @@
+{
+  "files.exclude": {
+    ".dart_tool": true,
+    ".idea": true,
+    ".metadata": true,
+    ".packages": true,
+    "android": true,
+    "ios": true,
+    "linux": true,
+    "pubspec.lock": true,
+    "packages/open_meteo_api/.dart_tool": true,
+    "packages/open_meteo_api/.idea": true,
+    "packages/open_meteo_api/.metadata": true,
+    "packages/open_meteo_api/.packages": true,
+    "packages/open_meteo_api/pubspec.lock": true
+  }
+}
