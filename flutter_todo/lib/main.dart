@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_todo/blocs/todos_status/todos_status_bloc.dart';
 import 'package:flutter_todo/simple_bloc_observer.dart';
 
 import 'blocs/blocs.dart';
@@ -42,6 +43,13 @@ class MyApp extends StatelessWidget {
               ),
             ),
         ),
+        BlocProvider(
+          create: (context) => TodosStatusBloc(
+            todosBloc: BlocProvider.of(context),
+          )..add(
+              const UpdateTodoStatus(),
+            ),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

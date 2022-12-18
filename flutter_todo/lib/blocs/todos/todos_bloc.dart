@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -9,7 +11,9 @@ part 'todos_state.dart';
 class TodosBloc extends Bloc<TodosEvent, TodosState> {
   TodosBloc() : super(TodosLoading()) {
     on<LoadTodos>(_onLoadTodos);
-    on<AddTodo>(_onAddTodos);
+    on<AddTodo>(_onAddTodo);
+    on<DeleteTodo>(_onDeleteTodo);
+    on<UpdateTodo>(_onUpdateTodo);
   }
 
   void _onLoadTodos(
@@ -19,13 +23,39 @@ class TodosBloc extends Bloc<TodosEvent, TodosState> {
     emit(TodosLoaded(todos: event.todos));
   }
 
-  void _onAddTodos(
+  void _onAddTodo(
     AddTodo event,
     Emitter<TodosState> emit,
   ) {
     final state = this.state;
     if (state is TodosLoaded) {
       emit(TodosLoaded(todos: List.from(state.todos)..add(event.todo)));
+    }
+  }
+
+  FutureOr<void> _onDeleteTodo(
+    DeleteTodo event,
+    Emitter<TodosState> emit,
+  ) {
+    final state = this.state;
+    if (state is TodosLoaded) {
+      List<Todo> todos = (state.todos.where((todo) {
+        return todo.id != event.todo.id;
+      }).toList());
+      emit(TodosLoaded(todos: todos));
+    }
+  }
+
+  FutureOr<void> _onUpdateTodo(
+    UpdateTodo event,
+    Emitter<TodosState> emit,
+  ) {
+    final state = this.state;
+    if (state is TodosLoaded) {
+      List<Todo> todos = (state.todos.map((todo) {
+        return todo.id == event.todo.id ? event.todo : todo;
+      }).toList());
+      emit(TodosLoaded(todos: todos));
     }
   }
 }
