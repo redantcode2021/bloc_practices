@@ -1,0 +1,10 @@
+{
+  "files.exclude": {
+    "packages/authentication_repository/.idea": true,
+    "packages/authentication_repository/.dart_tool": true,
+    ".dart_tool": true,
+    ".idea": true,
+    "packages/user_repository/.dart_tool": true,
+    "packages/user_repository/.idea": true
+  }
+}
