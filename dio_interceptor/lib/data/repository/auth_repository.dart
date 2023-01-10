@@ -41,9 +41,11 @@ class AuthRepository {
         'email': email,
         'password': password,
       });
+      //print(response.data.toString());
       if (response.statusCode != 200) {
         throw Exception('Failed to sign in');
       }
+      completer.complete(response.data);
     } catch (e) {
       print(e);
     }

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 // ignore: depend_on_referenced_packages
 import 'package:bloc/bloc.dart';
@@ -23,7 +24,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   final AuthRepository authRepository;
 
-  Future<FutureOr<void>> _loginUser(
+  FutureOr<void> _loginUser(
     LoginRequested event,
     Emitter<AuthState> emit,
   ) async {
@@ -33,7 +34,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         email: event.email,
         password: event.password,
       );
-
       if (res['token'].toString().isNotEmpty) {
         await locator.setUserToken(userToken: res['token']).then((value) {
           emit(LoggedInSuccessfully());
@@ -48,7 +48,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
-  Future<FutureOr<void>> _registerUser(
+  FutureOr<void> _registerUser(
     RegisterRequested event,
     Emitter<AuthState> emit,
   ) async {

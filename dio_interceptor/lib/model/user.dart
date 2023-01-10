@@ -1,93 +1,95 @@
+// To parse this JSON data, do
+//
+//     final user = userFromJson(jsonString);
+
 class User {
+  User({
+    this.page,
+    this.perPage,
+    this.total,
+    this.totalPages,
+    this.data,
+    this.support,
+  });
+
   int? page;
   int? perPage;
   int? total;
   int? totalPages;
-  List<Data>? data;
+  List<Datum?>? data;
   Support? support;
 
-  User(
-      {this.page,
-      this.perPage,
-      this.total,
-      this.totalPages,
-      this.data,
-      this.support});
+  factory User.fromJson(Map<String, dynamic> json) => User(
+        page: json["page"],
+        perPage: json["per_page"],
+        total: json["total"],
+        totalPages: json["total_pages"],
+        data: json["data"] == null
+            ? []
+            : List<Datum?>.from(json["data"]!.map((x) => Datum.fromJson(x))),
+        support: Support.fromJson(json["support"]),
+      );
 
-  User.fromJson(Map<String, dynamic> json) {
-    page = json['page'];
-    perPage = json['per_page'];
-    total = json['total'];
-    totalPages = json['total_pages'];
-    if (json['data'] != null) {
-      data = <Data>[];
-      json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
-      });
-    }
-    support =
-        json['support'] != null ? new Support.fromJson(json['support']) : null;
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['page'] = this.page;
-    data['per_page'] = this.perPage;
-    data['total'] = this.total;
-    data['total_pages'] = this.totalPages;
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    if (this.support != null) {
-      data['support'] = this.support!.toJson();
-    }
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "page": page,
+        "per_page": perPage,
+        "total": total,
+        "total_pages": totalPages,
+        "data": data == null
+            ? []
+            : List<dynamic>.from(data!.map((x) => x!.toJson())),
+        "support": support!.toJson(),
+      };
 }
 
-class Data {
+class Datum {
+  Datum({
+    this.id,
+    this.email,
+    this.firstName,
+    this.lastName,
+    this.avatar,
+  });
+
   int? id;
   String? email;
   String? firstName;
   String? lastName;
   String? avatar;
 
-  Data({this.id, this.email, this.firstName, this.lastName, this.avatar});
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+        id: json["id"],
+        email: json["email"],
+        firstName: json["first_name"],
+        lastName: json["last_name"],
+        avatar: json["avatar"],
+      );
 
-  Data.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    email = json['email'];
-    firstName = json['first_name'];
-    lastName = json['last_name'];
-    avatar = json['avatar'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['email'] = this.email;
-    data['first_name'] = this.firstName;
-    data['last_name'] = this.lastName;
-    data['avatar'] = this.avatar;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "email": email,
+        "first_name": firstName,
+        "last_name": lastName,
+        "avatar": avatar,
+      };
 }
 
 class Support {
+  Support({
+    this.url,
+    this.text,
+  });
+
   String? url;
   String? text;
 
-  Support({this.url, this.text});
+  factory Support.fromJson(Map<String, dynamic> json) => Support(
+        url: json["url"],
+        text: json["text"],
+      );
 
-  Support.fromJson(Map<String, dynamic> json) {
-    url = json['url'];
-    text = json['text'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['url'] = this.url;
-    data['text'] = this.text;
-    return data;
-  }
+  Map<String, dynamic> toJson() => {
+        "url": url,
+        "text": text,
+      };
 }
