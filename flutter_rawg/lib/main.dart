@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_rawg/data/services/locator.dart';
 import 'package:flutter_rawg/presentation/home/pages/home_page.dart';
+import 'package:flutter_rawg/utils/app_bloc_observer.dart';
 
-void main() {
+Future<void> main() async {
+  await dotenv.load(fileName: "assets/.env");
+  await setup();
+  Bloc.observer = AppBlocObserver();
   runApp(const MyApp());
 }
 
@@ -14,7 +21,9 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Games Repository',
-      theme: ThemeData(),
+      theme: ThemeData(
+        primarySwatch: Colors.amber,
+      ),
       home: const HomePage(),
     );
   }
