@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rawg/common/widgets/error_widget.dart';
-import 'package:flutter_rawg/presentation/home/widgets/games_by_category_widget/bloc/games_by_category_bloc.dart';
 import 'package:flutter_rawg/presentation/home/widgets/games_by_category_widget/games_by_category_barrel.dart';
 
 class GamesByCategoryWidget extends StatelessWidget {

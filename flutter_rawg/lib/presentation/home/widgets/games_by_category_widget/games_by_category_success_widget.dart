@@ -34,6 +34,10 @@ class GameByCategorySuccessWidget extends StatelessWidget {
         Container(
           height: MediaQuery.of(context).size.height * .2,
           child: ListView.separated(
+            padding: const EdgeInsets.only(
+              left: 24.0,
+              right: 24.0,
+            ),
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
               return GamesByCategoryImage(

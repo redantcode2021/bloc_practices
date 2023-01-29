@@ -37,7 +37,7 @@ class GamesByCategoryImage extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: 18.0,
+            bottom: 2.0,
             child: GamesByCategoryTitle(
               name: name,
             ),
