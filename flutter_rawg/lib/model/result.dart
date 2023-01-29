@@ -7,6 +7,7 @@ part 'result.g.dart';
 class Result {
   final int id;
   final String? slug;
+  final String? name;
   final DateTime? released;
   final bool? tba;
   final String? backgroundImage;
@@ -35,6 +36,7 @@ class Result {
   final List<ShortScreenShot>? shortScreenshots;
   Result({
     required this.id,
+    this.name,
     this.slug,
     this.released,
     this.tba,

@@ -3,6 +3,8 @@ import 'package:flutter_rawg/common/widgets/container_body.dart';
 import 'package:flutter_rawg/presentation/home/widgets/category_widget/category_widget.dart';
 import 'package:flutter_rawg/presentation/home/widgets/header_title/header_title.dart';
 
+import '../widgets/games_by_category_widget/games_by_category_widget.dart';
+
 class HomeLayout extends StatelessWidget {
   const HomeLayout({Key? key}) : super(key: key);
 
@@ -20,6 +22,7 @@ class HomeLayout extends StatelessWidget {
           ContainerBody(
             children: [
               CategoriesWidget(),
+              GamesByCategoryWidget(),
             ],
           ),
         ],

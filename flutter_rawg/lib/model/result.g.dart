@@ -8,6 +8,7 @@ part of 'result.dart';
 
 Result _$ResultFromJson(Map<String, dynamic> json) => Result(
       id: json['id'] as int,
+      name: json['name'] as String?,
       slug: json['slug'] as String?,
       released: json['released'] == null
           ? null
@@ -63,6 +64,7 @@ Result _$ResultFromJson(Map<String, dynamic> json) => Result(
 Map<String, dynamic> _$ResultToJson(Result instance) => <String, dynamic>{
       'id': instance.id,
       'slug': instance.slug,
+      'name': instance.name,
       'released': instance.released?.toIso8601String(),
       'tba': instance.tba,
       'background_image': instance.backgroundImage,

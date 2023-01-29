@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rawg/model/genre.dart';
+import 'package:flutter_rawg/presentation/home/widgets/games_by_category_widget/games_by_category_barrel.dart';
 import 'category_barrel.dart';
 
 class CategoriesSuccessWidget extends StatelessWidget {
@@ -20,6 +21,12 @@ class CategoriesSuccessWidget extends StatelessWidget {
                 key: ValueKey('${state.categories[index].name}$index'),
                 category: state.categories[index],
                 callback: (Genre categorySelected) {
+                  context.read<GamesByCategoryBloc>().add(
+                        GetGamesByCategory(
+                          idSelected: categorySelected.id,
+                          categoryName: categorySelected.name ?? '',
+                        ),
+                      );
                   context.read<CategoryBloc>().add(
                         SelectCategory(idSelected: categorySelected.id),
                       );
