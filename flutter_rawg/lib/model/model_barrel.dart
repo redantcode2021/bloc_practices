@@ -8,3 +8,4 @@ export 'esrb_rating.dart';
 export 'parent_platform.dart';
 export 'store.dart';
 export 'short_screenshot.dart';
+export 'result.dart';
