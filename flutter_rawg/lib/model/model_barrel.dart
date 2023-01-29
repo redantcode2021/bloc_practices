@@ -9,3 +9,6 @@ export 'parent_platform.dart';
 export 'store.dart';
 export 'short_screenshot.dart';
 export 'result.dart';
+export 'year_game.dart';
+export 'filters_year.dart';
+export 'filters.dart';
