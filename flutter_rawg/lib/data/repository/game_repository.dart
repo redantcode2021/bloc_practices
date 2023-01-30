@@ -9,6 +9,24 @@ import '../../model/result_error.dart';
 class GameRepository {
   final networkLocator = getIt.get<DioClient>();
 
+  Future<Game> getGames() async {
+    final response = await networkLocator.dio.get(
+      '${EndPoints.baseUrl}${EndPoints.games}',
+    );
+
+    if (response.statusCode == 200) {
+      if (response.data.toString().isNotEmpty) {
+        return Game.fromJson(
+          jsonDecode(jsonEncode(response.data)),
+        );
+      } else {
+        throw ErrorEmptyResponse();
+      }
+    } else {
+      throw ErrorGettingGames("Error getting games");
+    }
+  }
+
   Future<List<Genre>> getGenres() async {
     final response = await networkLocator.dio.get(
       '${EndPoints.baseUrl}${EndPoints.genres}',

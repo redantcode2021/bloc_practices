@@ -12,3 +12,4 @@ export 'result.dart';
 export 'year_game.dart';
 export 'filters_year.dart';
 export 'filters.dart';
+export 'game.dart';

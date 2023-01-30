@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rawg/data/repository/game_repository.dart';
 import 'package:flutter_rawg/presentation/home/pages/home_layout.dart';
+import 'package:flutter_rawg/presentation/home/widgets/all_games_widget/all_games_barrel.dart';
 import 'package:flutter_rawg/presentation/home/widgets/category_widget/bloc/category_bloc.dart';
 import 'package:flutter_rawg/presentation/home/widgets/games_by_category_widget/bloc/games_by_category_bloc.dart';
 
@@ -25,6 +26,13 @@ class HomePage extends StatelessWidget {
           BlocProvider<GamesByCategoryBloc>(
             create: (context) => GamesByCategoryBloc(
                 gameRepository: context.read<GameRepository>()),
+          ),
+          BlocProvider<AllGamesBloc>(
+            create: (context) =>
+                AllGamesBloc(gameRepository: context.read<GameRepository>())
+                  ..add(
+                    GetGames(),
+                  ),
           ),
         ], child: const HomeLayout()),
       ),
