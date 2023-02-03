@@ -6,8 +6,11 @@ import 'package:netflix/data/repository/movie_repository.dart';
 import 'package:netflix/data/services/locator.dart';
 import 'package:netflix/presentation/profile/bloc/profile_bloc.dart';
 import 'package:netflix/presentation/profile/pages/profile_selection_screen.dart';
+import 'package:netflix/presentation/widgets/nextflix_scaffold.dart';
 import 'package:netflix/utils/app_bloc_observer.dart';
 import 'package:netflix/utils/utils.dart';
+
+import 'presentation/home/pages/home_screen.dart';
 
 Future<void> main() async {
   await dotenv.load(fileName: "assets/.env");
@@ -54,6 +57,20 @@ class NextflipApp extends StatelessWidget {
         builder: (BuildContext context, GoRouterState state) {
           return const ProfileSelectionScreen();
         },
+      ),
+      ShellRoute(
+        builder: (context, state, child) {
+          return NetflixScaffold(child: child);
+        },
+        routes: <RouteBase>[
+          GoRoute(
+            name: 'Home',
+            path: '/home',
+            builder: (BuildContext context, GoRouterState state) {
+              return HomeScreen();
+            },
+          ),
+        ],
       ),
     ],
   );
