@@ -10,7 +10,7 @@ class Movie {
   final String? posterPath;
   final String originalName;
   final String originalLanguage;
-  final String type;
+  final String mediaType;
   final List<int> genreIds;
   final double popularity;
   final DateTime? releaseDate;
@@ -18,12 +18,12 @@ class Movie {
   final int voteCount;
   final List<String> originCountry;
   final String? backdropPath;
-  final bool adult;
-  final bool video;
+  final bool? adult;
+  final bool? video;
   final int? runtime;
   final int? episodes;
   final int? seasons;
-  final bool details;
+  final bool? details;
   Movie({
     required this.id,
     required this.name,
@@ -31,7 +31,7 @@ class Movie {
     this.posterPath,
     required this.originalName,
     required this.originalLanguage,
-    required this.type,
+    required this.mediaType,
     required this.genreIds,
     required this.popularity,
     this.releaseDate,
@@ -48,7 +48,7 @@ class Movie {
   });
 
   String getRuntime() {
-    if (type == 'movie') {
+    if (mediaType == 'movie') {
       var hours = runtime! / 60,
           justHours = hours.floor(),
           minutes = ((hours - hours.floor()) * 60).floor();

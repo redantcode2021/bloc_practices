@@ -13,7 +13,7 @@ Movie _$MovieFromJson(Map<String, dynamic> json) => Movie(
       posterPath: json['poster_path'] as String?,
       originalName: json['original_name'] as String,
       originalLanguage: json['original_language'] as String,
-      type: json['type'] as String,
+      mediaType: json['media_type'] as String,
       genreIds:
           (json['genre_ids'] as List<dynamic>).map((e) => e as int).toList(),
       popularity: (json['popularity'] as num).toDouble(),
@@ -26,12 +26,12 @@ Movie _$MovieFromJson(Map<String, dynamic> json) => Movie(
           .map((e) => e as String)
           .toList(),
       backdropPath: json['backdrop_path'] as String?,
-      adult: json['adult'] as bool,
-      video: json['video'] as bool,
+      adult: json['adult'] as bool?,
+      video: json['video'] as bool?,
       runtime: json['runtime'] as int?,
       episodes: json['episodes'] as int?,
       seasons: json['seasons'] as int?,
-      details: json['details'] as bool,
+      details: json['details'] as bool?,
     );
 
 Map<String, dynamic> _$MovieToJson(Movie instance) => <String, dynamic>{
@@ -41,7 +41,7 @@ Map<String, dynamic> _$MovieToJson(Movie instance) => <String, dynamic>{
       'poster_path': instance.posterPath,
       'original_name': instance.originalName,
       'original_language': instance.originalLanguage,
-      'type': instance.type,
+      'media_type': instance.mediaType,
       'genre_ids': instance.genreIds,
       'popularity': instance.popularity,
       'release_date': instance.releaseDate?.toIso8601String(),
