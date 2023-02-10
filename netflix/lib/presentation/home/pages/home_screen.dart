@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:netflix/common/widgets/movie_box.dart';
+import 'package:netflix/cubit/animation_status_cubit.dart';
 import 'package:shimmer/shimmer.dart';
 import '../widgets/header_section/header_barrel.dart';
-import '../widgets/trending_tvshow_widget/bloc/trending_tv_show_bloc.dart';
+import '../widgets/trending_tvshow_widget/trending_tvshow_barrel.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({
@@ -28,9 +30,21 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void initState() {
-    context.read<TrendingTvShowBloc>().add(FetchTrendingTvShowListWeekly());
-    context.read<TrendingTvShowBloc>().add(FetchTrendingTvShowListDaily());
+    context
+        .read<TrendingTvShowWeeklyBloc>()
+        .add(FetchingTrendingTvShowListWeekly());
+    context
+        .read<TrendingTvShowDailyBloc>()
+        .add(FetchingTrendingTvShowListDaily());
     super.initState();
+  }
+
+  @override
+  void didChangeDependencies() {
+    if (GoRouter.of(context).location != '/home/tvshows') {
+      context.read<AnimationStatusCubit>().onStatus(null);
+    }
+    super.didChangeDependencies();
   }
 
   final _shimmer = Shimmer(
@@ -88,7 +102,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 height: 180.0,
                 child: Builder(
                   builder: (context) {
-                    final movies = context.watch<TrendingTvShowBloc>().state;
+                    final movies =
+                        context.watch<TrendingTvShowWeeklyBloc>().state;
 
                     if (movies is TrendingTvShowListWeekly) {
                       return ListView.builder(
@@ -115,6 +130,26 @@ class _HomeScreenState extends State<HomeScreen> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+              ),
+              SizedBox(
+                height: 180.0,
+                child: Builder(builder: (context) {
+                  final movies = context.watch<TrendingTvShowDailyBloc>().state;
+
+                  if (movies is TrendingTvShowListDaily) {
+                    return ListView.builder(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: movies.list.length,
+                      itemBuilder: (context, index) {
+                        final movie = movies.list[index];
+                        return MovieBox(
+                          movie: movie,
+                        );
+                      },
+                    );
+                  }
+                  return _shimmer;
+                }),
               ),
             ],
           ),

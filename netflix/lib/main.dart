@@ -6,8 +6,8 @@ import 'package:netflix/bloc/configuration/configuration_bloc.dart';
 import 'package:netflix/cubit/animation_status_cubit.dart';
 import 'package:netflix/data/repository/movie_repository.dart';
 import 'package:netflix/data/services/locator.dart';
-import 'package:netflix/model/configuration.dart';
-import 'package:netflix/presentation/home/widgets/trending_tvshow_widget/bloc/trending_tv_show_bloc.dart';
+import 'package:netflix/presentation/home/widgets/trending_tvshow_widget/trending_tvshow_barrel.dart';
+import 'package:netflix/presentation/home/widgets/trending_tvshow_widget/weekly/trending_tv_show_weekly_bloc.dart';
 import 'package:netflix/presentation/profile/bloc/profile_bloc.dart';
 import 'package:netflix/presentation/profile/pages/profile_selection_screen.dart';
 import 'package:netflix/utils/app_bloc_observer.dart';
@@ -46,9 +46,13 @@ class NextflipApp extends StatelessWidget {
                   ..add(FetchConfiguration()),
             lazy: false,
           ),
-          BlocProvider<TrendingTvShowBloc>(
+          BlocProvider<TrendingTvShowDailyBloc>(
             create: (context) =>
-                TrendingTvShowBloc(movieRepository: _movieRepository),
+                TrendingTvShowDailyBloc(movieRepository: _movieRepository),
+          ),
+          BlocProvider<TrendingTvShowWeeklyBloc>(
+            create: (context) =>
+                TrendingTvShowWeeklyBloc(movieRepository: _movieRepository),
           ),
         ],
         child: MaterialApp.router(
@@ -83,12 +87,37 @@ class NextflipApp extends StatelessWidget {
         },
         routes: <RouteBase>[
           GoRoute(
-            name: 'Home',
-            path: '/home',
-            builder: (BuildContext context, GoRouterState state) {
-              return const HomeScreen();
-            },
-          ),
+              name: 'Home',
+              path: '/home',
+              builder: (BuildContext context, GoRouterState state) {
+                return const HomeScreen();
+              },
+              routes: [
+                GoRoute(
+                  name: 'TV Shows',
+                  path: 'tvshows',
+                  builder: (BuildContext context, GoRouterState state) {
+                    return HomeScreen(name: state.name);
+                  },
+                  pageBuilder: (context, state) {
+                    return CustomTransitionPage<void>(
+                        key: state.pageKey,
+                        child: HomeScreen(name: state.name),
+                        transitionDuration: const Duration(microseconds: 600),
+                        transitionsBuilder:
+                            (context, animation, secondaryAnimation, child) {
+                          final status = context.read<AnimationStatusCubit>();
+                          animation.removeStatusListener(status.onStatus);
+                          animation.addStatusListener(status.onStatus);
+                          secondaryAnimation
+                              .removeStatusListener(status.onStatus);
+                          secondaryAnimation.addStatusListener(status.onStatus);
+                          return FadeTransition(
+                              opacity: animation, child: child);
+                        });
+                  },
+                ),
+              ]),
         ],
       ),
     ],

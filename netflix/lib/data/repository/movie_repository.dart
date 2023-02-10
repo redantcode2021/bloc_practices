@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:netflix/data/endpoints/endpoints.dart';
 import 'package:netflix/data/network/dio_client.dart';
 import 'package:netflix/data/services/locator.dart';
-import 'package:netflix/model/configuration.dart';
 import 'package:netflix/model/model_barrel.dart';
 import 'package:netflix/model/result_error.dart';
 
